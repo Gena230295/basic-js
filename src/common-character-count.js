@@ -21,7 +21,7 @@ function getCommonCharacterCount(s1, s2) {
     for (let s = 0; s < longestArr.length; s += 1) {
       if (shortestArr[i] === longestArr[s]) {
         longestArr.splice(s, 1);
-        num++;
+        num += 1;
         break;
       }
     }
