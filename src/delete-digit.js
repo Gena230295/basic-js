@@ -14,7 +14,7 @@ const { NotImplementedError } = require("../extensions/index.js");
 function deleteDigit(n) {
   const arr = String(n).split("");
   let num = 0;
-  for (let i = 0; i < arr.length - 1; i++) {
+  for (let i = 0; i < arr.length - 1; i += 1) {
     if (arr[i] < arr[i + 1]) {
       arr.splice(i, 1);
       num += 1;

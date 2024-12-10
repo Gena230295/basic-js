@@ -24,19 +24,19 @@ const { NotImplementedError } = require("../extensions/index.js");
  */
 function getDNSStats(domains) {
   const arr = [];
-  for (let i = 0; i < domains.length; i++) {
+  for (let i = 0; i < domains.length; i += 1) {
     arr.push(domains[i].split(".").reverse());
   }
 
   const newArr = [];
-  for (let i = 0; i < arr.length; i++) {
-    for (let s = 0; s < arr[i].length; s++) {
+  for (let i = 0; i < arr.length; i += 1) {
+    for (let s = 0; s < arr[i].length; s += 1) {
       newArr.push(arr[i].slice(0, s + 1));
     }
   }
 
   const stillArr = [];
-  for (let i = 0; i < newArr.length; i++) {
+  for (let i = 0; i < newArr.length; i += 1) {
     stillArr.push(`.${newArr[i].join(".")}`);
   }
 
@@ -44,12 +44,12 @@ function getDNSStats(domains) {
 
   const obj = {};
 
-  for (let i = 0; i < setArr.length; i++) {
+  for (let i = 0; i < setArr.length; i += 1) {
     let num = 1;
-    for (let s = 0; s < stillArr.length; s++) {
+    for (let s = 0; s < stillArr.length; s += 1) {
       if (setArr[i] === stillArr[s]) {
         obj[setArr[i]] = num;
-        num++;
+        num += 1;
       }
     }
     num = 1;
