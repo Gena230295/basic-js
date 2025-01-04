@@ -26,7 +26,7 @@ class VigenereCipheringMachine {
     }
   }
 
-  encrypt(mainStr, keyStr) {
+  encDecAll(mainStr, keyStr, encryptOnly = true) {
     if (mainStr === undefined || keyStr === undefined) {
       throw new Error("Incorrect arguments!");
     }
@@ -48,8 +48,9 @@ class VigenereCipheringMachine {
       indx2.push(alph.indexOf(str2[i]));
     }
     const enc = [];
+    const indF = encryptOnly === true ? 1 : -1;
     for (let i = 0; i < indx1.length; i++) {
-      enc.push((alph.length + indx1[i] + indx2[i]) % alph.length);
+      enc.push((alph.length + indx1[i] + indF * indx2[i]) % alph.length);
     }
     const encText = [];
     for (let i = 0; i < enc.length; i++) {
@@ -71,50 +72,12 @@ class VigenereCipheringMachine {
     }
     return finStr;
   }
+
+  encrypt(mainStr, keyStr) {
+    return this.encDecAll(mainStr, keyStr, true);
+  }
   decrypt(mainStr, keyStr) {
-    if (mainStr === undefined || keyStr === undefined) {
-      throw new Error("Incorrect arguments!");
-    }
-    const strCopy = mainStr.toUpperCase();
-    const alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let str1 = "";
-    for (let i = 0; i < mainStr.length; i++) {
-      if (alph.includes(mainStr[i].toUpperCase())) {
-        str1 += mainStr[i].toUpperCase();
-      }
-    }
-    const str2 = keyStr
-      .repeat(Math.ceil(str1.length / keyStr.length))
-      .toUpperCase();
-    let indx1 = [];
-    let indx2 = [];
-    for (let i = 0; i < str1.length; i++) {
-      indx1.push(alph.indexOf(str1[i]));
-      indx2.push(alph.indexOf(str2[i]));
-    }
-    const enc = [];
-    for (let i = 0; i < indx1.length; i++) {
-      enc.push((alph.length + indx1[i] - indx2[i]) % alph.length);
-    }
-    const encText = [];
-    for (let i = 0; i < enc.length; i++) {
-      encText.push(alph[enc[i]]);
-    }
-    let finStr = "";
-    let encInd = 0;
-    for (let i = 0; i < strCopy.length; i++) {
-      if (alph.includes(strCopy[i])) {
-        finStr += encText[encInd];
-        encInd += 1;
-      } else {
-        finStr += strCopy[i];
-      }
-    }
-    const revStr = finStr.split("").reverse().join("");
-    if (this.mainEncDec === false) {
-      return revStr;
-    }
-    return finStr;
+    return this.encDecAll(mainStr, keyStr, false);
   }
 }
 
